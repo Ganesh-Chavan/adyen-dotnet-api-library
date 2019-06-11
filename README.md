@@ -15,6 +15,9 @@ The Library supports all APIs under the following services:
 * modifications
 * recurring
 * Terminal API (Local and Cloud based)
+* payouts
+* marketpay
+* notifications
 
 ## Requirements
 
