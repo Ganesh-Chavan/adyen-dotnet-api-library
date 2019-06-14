@@ -20,5 +20,18 @@
 
         public static string LibName = "adyen-dotnet-api-library";
         public static string LibVersion = "2.1.0";
+
+        public static string MARKETPAY_ENDPOINT_TEST = "https://cal-test.adyen.com/cal/services";
+        public static string MARKETPAY_ENDPOINT_LIVE = "https://cal-live.adyen.com/cal/services";
+        public static string MARKETPAY_ACCOUNT_API_VERSION = "v4";
+        public static string MARKETPAY_FUND_API_VERSION = "v3";
+        public static string MARKETPAY_NOTIFICATION_API_VERSION = "v1";
+
+        public static string BIN_LOOKUP_PAL_SUFFIX = "/pal/servlet/BinLookup/";
+        public static string BIN_LOOKUP_API_VERSION = "v50";
+
+        public static string TERMINAL_API_ENDPOINT_TEST = "https://terminal-api-test.adyen.com";
+        public static string TERMINAL_API_ENDPOINT_LIVE = "https://terminal-api-live.adyen.com";
+
     }
 }

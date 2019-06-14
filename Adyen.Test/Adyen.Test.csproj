@@ -23,11 +23,8 @@
 
   <ItemGroup>
     <Compile Remove="MochFiles\**" />
-    <Compile Remove="Mocks\**" />
     <EmbeddedResource Remove="MochFiles\**" />
-    <EmbeddedResource Remove="Mocks\**" />
     <None Remove="MochFiles\**" />
-    <None Remove="Mocks\**" />
   </ItemGroup>
 
   <ItemGroup>

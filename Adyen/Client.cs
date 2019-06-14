@@ -68,11 +68,15 @@ namespace Adyen
                     Config.HppEndpoint = ClientConfig.HppTest;
                     Config.CloudApiEndPoint = ClientConfig.CloudApiEndPointTest;
                     Config.CheckoutEndpoint = ClientConfig.CheckoutEndpointTest;
+                    Config.MarketPayEndpoint = ClientConfig.MARKETPAY_ENDPOINT_TEST;
+                    Config.TerminalApiCloudEndpoint=ClientConfig.TERMINAL_API_ENDPOINT_TEST;
                     break;
                 case Environment.Live:
                     Config.Endpoint = ClientConfig.EndpointLive;
                     Config.HppEndpoint = ClientConfig.HppLive;
                     Config.CloudApiEndPoint = ClientConfig.CloudApiEndPointLive;
+                    Config.MarketPayEndpoint = ClientConfig.MARKETPAY_ENDPOINT_LIVE;
+                    Config.TerminalApiCloudEndpoint=ClientConfig.TERMINAL_API_ENDPOINT_LIVE;
                     //set live endpoint for checkout api
                     if (!string.IsNullOrEmpty(liveEndpointUrlPrefix))
                     {
@@ -122,6 +126,16 @@ namespace Adyen
             {
                 LogCallback(message);
             }
+        }
+
+        public void SetTimeouts(int connectionTimeoutMillis, int readTimeoutMillis) 
+        {
+            Config.HttpClientTimeout= connectionTimeoutMillis;
+            Config.ReadTimeoutMillis= readTimeoutMillis;
+        }
+
+        public void SetApplicationName(string applicationName) {
+            Config.ApplicationName=applicationName;
         }
     }
 }

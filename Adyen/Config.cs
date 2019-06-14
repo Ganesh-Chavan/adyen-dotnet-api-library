@@ -13,6 +13,10 @@ namespace Adyen
         public string Endpoint { get; set; }
         public string ApplicationName { get; set; }
         public int HttpClientTimeout { get; set; }
+        public int ReadTimeoutMillis { get; set; }
+        
+
+
         //HPP specific
         public string HppEndpoint { get; set; }
         public string SkinCode{ get; set; }
@@ -24,6 +28,13 @@ namespace Adyen
         public string CloudApiEndPoint { get; set; }
         [Obsolete("This is deprecated property by Adyen.")]
         public bool SkipCertValidation { get; set; } = false;
+
+
+        public string MarketPayEndpoint { get; set; }
+
+        public string TerminalApiCloudEndpoint { get; set; }
+        public string TerminalApiLocalEndpoint { get; set; }
+        public string TerminalCertificatePath { get; set; }
 
     }
 }

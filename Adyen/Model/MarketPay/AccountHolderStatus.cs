@@ -1,274 +1,179 @@
-using Adyen.Model.AdditionalData;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using Adyen.Model.ApplicationInformation;
-using Adyen.Util;
-    [DataContract]
-public class AccountHolderStatus
+using Adyen.Model.Enum;
+using Newtonsoft.Json;
+
+namespace Adyen.Model.MarketPay
 {
-    [DataMember(Name = "processingState", EmitDefaultValue = false)]
-	private AccountProcessingState processingState = null;
+    /// <summary>
+    /// AccountHolderStatus
+    /// </summary>
+    [DataContract]
+    public partial class AccountHolderStatus : IEquatable<AccountHolderStatus>, IValidatableObject
+    {
 
-    [DataMember(Name = "statusReason", EmitDefaultValue = false)]
-	private string statusReason = null;
-
-    [DataMember(Name = "payoutState", EmitDefaultValue = false)]
-	private AccountPayoutState payoutState = null;
-
-	/// <summary>
-	/// status
-	/// </summary>
-	public sealed class StatusEnum
-	{
-		public static readonly StatusEnum ACTIVE = new StatusEnum("ACTIVE", InnerEnum.ACTIVE, "Active");
-
-		public static readonly StatusEnum CLOSED = new StatusEnum("CLOSED", InnerEnum.CLOSED, "Closed");
-
-		public static readonly StatusEnum INACTIVE = new StatusEnum("INACTIVE", InnerEnum.INACTIVE, "Inactive");
-
-		public static readonly StatusEnum SUSPENDED = new StatusEnum("SUSPENDED", InnerEnum.SUSPENDED, "Suspended");
-
-		private static readonly IList<StatusEnum> valueList = new List<StatusEnum>();
-
-		static StatusEnum()
-		{
-			valueList.Add(ACTIVE);
-			valueList.Add(CLOSED);
-			valueList.Add(INACTIVE);
-			valueList.Add(SUSPENDED);
-		}
-
-		public enum InnerEnum
-		{
-			ACTIVE,
-			CLOSED,
-			INACTIVE,
-			SUSPENDED
-		}
-
-		public readonly InnerEnum innerEnumValue;
-		private readonly string nameValue;
-		private readonly int ordinalValue;
-		private static int nextOrdinal = 0;
-
-		internal string value;
-
-		internal StatusEnum(string name, InnerEnum innerEnum, string value)
-		{
-			this.value = value;
-
-			nameValue = name;
-			ordinalValue = nextOrdinal++;
-			innerEnumValue = innerEnum;
-		}
-
-		public override string ToString()
-		{
-			return value.ToString();
-		}
-
-		public static IList<StatusEnum> values()
-		{
-			return valueList;
-		}
-
-		public int ordinal()
-		{
-			return ordinalValue;
-		}
-
-		public static StatusEnum valueOf(string name)
-		{
-			foreach (StatusEnum enumInstance in StatusEnum.valueList)
-			{
-				if (enumInstance.nameValue == name)
-				{
-					return enumInstance;
-				}
-			}
-			throw new System.ArgumentException(name);
-		}
-	}
-
- [DataMember(Name = "status", EmitDefaultValue = false)]
-	private StatusEnum status = null;
-
-[DataMember(Name = "accountEvents", EmitDefaultValue = false)]
-	private IList<AccountEvent> accountEvents = new List<AccountEvent>();
-
-	public virtual AccountHolderStatus processingState(AccountProcessingState processingState)
-	{
-		this.processingState = processingState;
-		return this;
-	}
-
-	/// <summary>
-	/// current processing tier
-	/// </summary>
-	/// <returns> processingState
-	///  </returns>
-	public virtual AccountProcessingState ProcessingState
-	{
-		get
-		{
-			return processingState;
-		}
-		set
-		{
-			this.processingState = value;
-		}
-	}
+        /// <summary>
+        /// statusReason.
+        /// </summary>
+        /// <value>statusReason.</value>
+        [DataMember(Name = "statusReason", EmitDefaultValue = false)]
+        public string statusReason { get; set; }
 
 
-	public virtual AccountHolderStatus statusReason(string statusReason)
-	{
-		this.statusReason = statusReason;
-		return this;
-	}
-
-	/// <summary>
-	/// status reason
-	/// </summary>
-	/// <returns> statusReason
-	///  </returns>
-	public virtual string StatusReason
-	{
-		get
-		{
-			return statusReason;
-		}
-		set
-		{
-			this.statusReason = value;
-		}
-	}
+        /// <summary>
+        /// processingState.
+        /// </summary>
+        /// <value>account.</value>
+        [DataMember(Name = "processingState", EmitDefaultValue = false)]
+        public AccountProcessingState processingState { get; set; }
 
 
-	public virtual AccountHolderStatus payoutState(AccountPayoutState payoutState)
-	{
-		this.payoutState = payoutState;
-		return this;
-	}
-
-	/// <summary>
-	/// payout state
-	/// </summary>
-	/// <returns> payoutState
-	///  </returns>
-	public virtual AccountPayoutState PayoutState
-	{
-		get
-		{
-			return payoutState;
-		}
-		set
-		{
-			this.payoutState = value;
-		}
-	}
+        /// <summary>
+        /// payoutState.
+        /// </summary>
+        /// <value>payoutState.</value>
+        [DataMember(Name = "payoutState", EmitDefaultValue = false)]
+        public AccountPayoutState payoutState { get; set; }
 
 
-	public virtual AccountHolderStatus status(StatusEnum status)
-	{
-		this.status = status;
-		return this;
-	}
 
-	/// <summary>
-	/// status
-	/// </summary>
-	/// <returns> status
-	///  </returns>
-	public virtual StatusEnum Status
-	{
-		get
-		{
-			return status;
-		}
-		set
-		{
-			this.status = value;
-		}
-	}
+        /// <summary>
+        /// accountEvents.
+        /// </summary>
+        /// <value>accountEvents.</value>
+        [DataMember(Name = "accountEvents", EmitDefaultValue = false)]
+        public StatusEnum accountEvents { get; set; }
 
 
-	public virtual AccountHolderStatus accountEvents(IList<AccountEvent> accountEvents)
-	{
-		this.accountEvents = accountEvents;
-		return this;
-	}
-
-	public virtual AccountHolderStatus addAccountEventsItem(AccountEvent accountEventsItem)
-	{
-		this.accountEvents.Add(accountEventsItem);
-		return this;
-	}
-
-	/// <summary>
-	/// scheduled events
-	/// </summary>
-	/// <returns> accountEvents
-	///  </returns>
-	public virtual IList<AccountEvent> AccountEvents
-	{
-		get
-		{
-			return accountEvents;
-		}
-		set
-		{
-			this.accountEvents = value;
-		}
-	}
+        /// <summary>
+        /// status.
+        /// </summary>
+        /// <value>status.</value>
+        [DataMember(Name = "status", EmitDefaultValue = false)]
+        public List<AccountEvent> status { get; set; }
 
 
-	public override bool Equals(object o)
-	{
-		if (this == o)
-		{
-			return true;
-		}
-		if (o == null || this.GetType() != o.GetType())
-		{
-			return false;
-		}
-		AccountHolderStatus accountHolderStatus = (AccountHolderStatus) o;
-		return Object.Equals(this.processingState, accountHolderStatus.processingState) && Object.Equals(this.statusReason, accountHolderStatus.statusReason) && Objects.Equals(this.payoutState, accountHolderStatus.payoutState) && Objects.Equals(this.status, accountHolderStatus.status) && Objects.Equals(this.accountEvents, accountHolderStatus.accountEvents);
-	}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountHolderStatus" /> class.
+        /// </summary>
+        /// <param name="account">account.</param>
+        public AccountHolderStatus(AccountProcessingState processingState = default(AccountProcessingState), AccountPayoutState payoutState = default(AccountPayoutState))
+        {
+            this.processingState = processingState;
+            this.payoutState = payoutState;
 
-	public override int GetHashCode()
-	{
-		return Object.GetHashCode(processingState, statusReason, payoutState, status, accountEvents);
-	}
+        }
 
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class AccountHolderStatus {\n");
+            sb.Append("  processingState: ").Append(processingState).Append("\n");
+            sb.Append("  statusReason: ").Append(statusReason).Append("\n");
+            sb.Append("  payoutState: ").Append(payoutState).Append("\n");
+            sb.Append("  status: ").Append(status).Append("\n");
+            sb.Append("  accountEvents: ").Append(accountEvents).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
 
-	public override string ToString()
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.Append("class AccountHolderStatus {\n");
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
 
-		sb.Append("    processingState: ").Append(toIndentedString(processingState)).Append("\n");
-		sb.Append("    statusReason: ").Append(toIndentedString(statusReason)).Append("\n");
-		sb.Append("    payoutState: ").Append(toIndentedString(payoutState)).Append("\n");
-		sb.Append("    status: ").Append(toIndentedString(status)).Append("\n");
-		sb.Append("    accountEvents: ").Append(toIndentedString(accountEvents)).Append("\n");
-		sb.Append("}");
-		return sb.ToString();
-	}
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="input">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object input)
+        {
+            return this.Equals(input as AccountHolderStatus);
+        }
 
-	/// <summary>
-	/// Convert the given object to string with each line indented by 4 spaces
-	/// (except the first line).
-	/// </summary>
-	private string toIndentedString(object o)
-	{
-		if (o == null)
-		{
-			return "null";
-		}
-		return o.ToString().Replace("\n", "\n    ");
-	}
+        /// <summary>
+        /// Returns true if MerchantDevice instances are equal
+        /// </summary>
+        /// <param name="input">Instance of MerchantDevice to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(AccountHolderStatus input)
+        {
+            if (input == null)
+                return false;
 
+            return
+                (
+                    this.processingState == input.processingState ||
+                    (this.processingState != null &&
+                    this.processingState.Equals(input.processingState))
+                )&&
+                (
+                    this.statusReason == input.statusReason ||
+                    (this.statusReason != null &&
+                     this.statusReason.Equals(input.statusReason))
+                ) &&
+                (
+                    this.payoutState == input.payoutState ||
+                    (this.payoutState != null &&
+                     this.payoutState.Equals(input.payoutState))
+                ) &&
+                (
+                    this.status == input.status ||
+                    (this.status != null &&
+                     this.status.Equals(input.status))
+                ) &&
+                (
+                    this.accountEvents == input.accountEvents ||
+                    (this.accountEvents != null &&
+                     this.accountEvents.Equals(input.accountEvents))
+                )
+
+                ;
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            unchecked // Overflow is fine, just wrap
+            {
+                int hashCode = 41;
+                if (this.processingState != null)
+                    hashCode = hashCode * 59 + this.processingState.GetHashCode();
+                if (this.statusReason != null)
+                    hashCode = hashCode * 59 + this.statusReason.GetHashCode();
+                if (this.payoutState != null)
+                    hashCode = hashCode * 59 + this.payoutState.GetHashCode();
+                if (this.status != null)
+                    hashCode = hashCode * 59 + this.status.GetHashCode();
+                if (this.accountEvents != null)
+                    hashCode = hashCode * 59 + this.accountEvents.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
+    }
 }
